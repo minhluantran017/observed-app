@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'backend_service'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['backend_service:8080']
+  - job_name: 'frontend_service'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['frontend_service:5000']

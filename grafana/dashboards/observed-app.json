@@ -1,0 +1,72 @@
+{
+   "dashboard": {
+     "id": null,
+     "title": "Observed App",
+     "panels": [
+       {
+         "title": "Backend Service Metrics",
+         "type": "graph",
+         "targets": [
+           {
+             "expr": "rate(request_count_total[1m])",
+             "legendFormat": "Requests per second"
+           }
+         ]
+       },
+       {
+         "title": "Backend Service Logs",
+         "type": "graph",
+         "datasource": "Loki",
+         "targets": [
+           {
+             "expr": "{app=\"backend_service\"} | logfmt | count_over_time[1m]",
+             "legendFormat": "Logs per second"
+           }
+         ]
+       },
+       {
+         "title": "Frontend Service Logs",
+         "type": "graph",
+         "datasource": "Loki",
+         "targets": [
+           {
+             "expr": "{app=\"frontend_service\"} | logfmt | count_over_time[1m]",
+             "legendFormat": "Logs per second"
+           }
+         ]
+       },
+       {
+         "title": "Backend Service Traces",
+         "type": "jaegerSingleStat",
+         "datasource": "Jaeger",
+         "spanName": "backend_service",
+         "spanOperation": "get_books",
+         "targets": []
+       },
+       {
+         "title": "Frontend Service Traces",
+         "type": "jaegerSingleStat",
+         "datasource": "Jaeger",
+         "spanName": "frontend_service",
+         "spanOperation": "get_books",
+         "targets": []
+       }
+     ],
+     "time": {
+       "from": "now-1h",
+       "to": "now"
+     },
+     "timepicker": {},
+     "timezone": "browser",
+     "templating": {
+       "list": []
+     },
+     "annotations": {
+       "list": []
+     },
+     "schemaVersion": 22,
+     "version": 0
+   },
+   "overwrite": true
+ }
+ 

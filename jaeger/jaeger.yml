@@ -1,0 +1,27 @@
+sampling:
+  # Available sampling strategies: const, probabilistic, rateLimiting, remote
+  # Use "const" sampling to sample every trace or "probabilistic" to sample a
+  # fraction of traces.
+  # For more details on these strategies, see: https://www.jaegertracing.io/docs/sampling/
+  strategy: const
+  # Only sample 10% of traces
+  param: 0.1
+
+# Configuration for the Jaeger agent, which receives spans from applications
+# and forwards them to the collector. You may have multiple agents, in which
+# case they will all forward to the same collector(s).
+# For more details, see: https://www.jaegertracing.io/docs/1.18/deployment/#agent
+agent:
+  # The host and port of the Jaeger agent
+  host: jaeger-agent
+  port: 6831
+
+# Configuration for the Jaeger collector, which receives spans from the agents
+# and forwards them to the storage backend. You may have multiple collectors,
+# in which case they will all forward to the same storage backend(s).
+# For more details, see: https://www.jaegertracing.io/docs/1.18/deployment/#collector
+collector:
+  # The endpoint(s) of the Jaeger collector(s), in the format "host:port".
+  # You may specify multiple collectors separated by commas. The agents will
+  # load balance between them.
+  endpoint: "jaeger-collector:14268"

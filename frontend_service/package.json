@@ -1,0 +1,27 @@
+{
+   "name": "frontend-service",
+   "version": "1.0.0",
+   "description": "Frontend service for bookstore application",
+   "main": "app.js",
+   "scripts": {
+     "start": "node app.js"
+   },
+   "author": "minhluantran017",
+   "license": "MIT",
+   "dependencies": {
+     "express": "^4.17.1",
+     "axios": "^0.21.1",
+     "opentelemetry": "^1.2.0",
+     "@opentelemetry/exporter-jaeger": "^1.2.0",
+     "@opentelemetry/exporter-prometheus": "^1.2.0",
+     "@opentelemetry/metrics": "^1.2.0",
+     "@opentelemetry/metrics-prometheus": "^1.2.0",
+     "@opentelemetry/metrics-async": "^1.2.0",
+     "@opentelemetry/instrumentation-express": "^1.2.0",
+     "@opentelemetry/instrumentation-axios": "^1.2.0",
+     "@opentelemetry/sdk-resources": "^1.2.0",
+     "@opentelemetry/sdk-trace-base": "^1.2.0",
+     "@opentelemetry/plugin-http": "^1.2.0"
+   }
+ }
+ 

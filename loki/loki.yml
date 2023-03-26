@@ -1,0 +1,46 @@
+auth_enabled: false
+
+server:
+  http_listen_port: 3100
+
+schema_config:
+  configs:
+  - from: 2021-01-01
+    store: boltdb
+    object_store: filesystem
+    schema: v11
+    index:
+      prefix: index_
+      period: 24h
+
+storage_config:
+  boltdb:
+    directory: /data/loki/index
+
+  filesystem:
+    directory: /data/loki/chunks
+
+  chunk_cache_config:
+    max_size: 10m
+    max_chunk_age: 1h
+
+client:
+  url: http://loki:3100/loki/api/v1/push
+
+  external_labels:
+    service: backend_service
+
+  # Scrape logs from backend_service containers
+  scrape_configs:
+  - job_name: backend_service
+    static_configs:
+    - targets: ['backend_service:8080']
+      labels:
+        job: backend_service
+
+  # Scrape logs from frontend_service containers
+  - job_name: frontend_service
+    static_configs:
+    - targets: ['frontend_service:5000']
+      labels:
+        job: frontend_service

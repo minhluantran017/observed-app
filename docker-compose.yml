@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend_service
+    environment:
+      - FLASK_ENV=development
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend_service
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+
+  prometheus:
+    image: prom/prometheus:v2.30.3
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command: --config.file=/etc/prometheus/prometheus.yml
+
+  loki:
+    image: grafana/loki:2.4.1
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/loki.yml:/etc/loki/local-config.yaml
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.27
+    ports:
+      - "16686:16686"
+      - "6831:6831/udp"
+    volumes:
+      - ./jaeger/jaeger.yml:/etc/jaeger/config.yml
+
+  grafana:
+    image: grafana/grafana:8.2.2
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    depends_on:
+      - prometheus
+      - loki
+      - jaeger
